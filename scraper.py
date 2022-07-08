@@ -22,9 +22,9 @@ def extract_date_and_pipeline(request_dict: dict[str, str]):
     target = split[index + 1 :]
     if "data" in target and "import" in target:
         target_data = target.index("data")
-        target[
-            target_data : target_data + 2
-        ] = f"{target[target_data]}_{target[target_data + 1]}"
+        data_import = f"{target[target_data]}_{target[target_data + 1]}"
+        target[0] = data_import
+        target.pop(1)
     for key in results_dict:
         if key in target:
             results_dict[key] += 1
