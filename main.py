@@ -1,4 +1,4 @@
 import scraper
 from dashboard import app
 
-app.run_server(debug=True)
+app.run_server()
