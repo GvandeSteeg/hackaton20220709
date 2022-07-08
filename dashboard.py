@@ -20,7 +20,14 @@ map_20 = df_2020["Mapping"].sum()
 snp_20 = df_2020["SNP_Calling"].sum()
 rna_seq_20 = df_2020["RNA-seq"].sum()
 
-sizes_20 = [data_import_requests_20, assembly_20, annotation_20, map_20, snp_20, rna_seq_20]
+sizes_20 = [
+    data_import_requests_20,
+    assembly_20,
+    annotation_20,
+    map_20,
+    snp_20,
+    rna_seq_20,
+]
 pie_df_2020 = pd.DataFrame(list(zip(labels, sizes_20)))
 
 data_import_requests_21 = df_2021["Data_Import"].sum()
@@ -30,7 +37,14 @@ map_21 = df_2021["Mapping"].sum()
 snp_21 = df_2021["SNP_Calling"].sum()
 rna_seq_19 = df_2021["RNA-seq"].sum()
 
-sizes_21 = [data_import_requests_21, assembly_21, annotation_21, map_21, snp_21, rna_seq_19]
+sizes_21 = [
+    data_import_requests_21,
+    assembly_21,
+    annotation_21,
+    map_21,
+    snp_21,
+    rna_seq_19,
+]
 pie_df_2021 = pd.DataFrame(list(zip(labels, sizes_21)))
 
 fig_2020 = px.bar(df_2020, barmode="group", title="2020 SAPP usage per month")
@@ -58,5 +72,5 @@ app.layout = html.Div(
     ]
 )
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run_server(debug=True)
