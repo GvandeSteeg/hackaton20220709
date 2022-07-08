@@ -1,6 +1,6 @@
-from dash import Dash, html, dcc
-import plotly.express as px
 import pandas as pd
+import plotly.express as px
+from dash import Dash, dcc, html
 
 app = Dash(__name__)
 
@@ -35,7 +35,7 @@ assembly_21 = df_2021["Assembly"].sum()
 annotation_21 = df_2021["Annotation"].sum()
 map_21 = df_2021["Mapping"].sum()
 snp_21 = df_2021["SNP_Calling"].sum()
-rna_seq_19 = df_2021["RNA-seq"].sum()
+rna_seq_21 = df_2021["RNA-seq"].sum()
 
 sizes_21 = [
     data_import_requests_21,
@@ -43,12 +43,30 @@ sizes_21 = [
     annotation_21,
     map_21,
     snp_21,
-    rna_seq_19,
+    rna_seq_21,
 ]
 pie_df_2021 = pd.DataFrame(list(zip(labels, sizes_21)))
 
+data_import_requests_22 = df_2022["Data_Import"].sum()
+assembly_22 = df_2022["Assembly"].sum()
+annotation_22 = df_2022["Annotation"].sum()
+map_22 = df_2022["Mapping"].sum()
+snp_22 = df_2022["SNP_Calling"].sum()
+rna_seq_22 = df_2022["RNA-seq"].sum()
+
+sizes_22 = [
+    data_import_requests_22,
+    assembly_22,
+    annotation_22,
+    map_22,
+    snp_22,
+    rna_seq_22,
+]
+pie_df_2022 = pd.DataFrame(list(zip(labels, sizes_22)))
+
 fig_2020 = px.bar(df_2020, barmode="group", title="2020 SAPP usage per month")
 fig_2021 = px.bar(df_2021, barmode="group", title="2021 SAPP usage per month")
+fig_2022 = px.bar(df_2022, barmode="group", title="2022 SAPP usage per month")
 line_fig = px.line(
     full_df,
     title="SAPP usage 2020-2022",
@@ -59,15 +77,18 @@ line_fig = px.line(
 full_usage_fig = px.bar(full_df, barmode="group", title="SAPP usage per Month 2020-22")
 pie_2020_fig = px.pie(pie_df_2020, values=1, names=0, title="2020 pie chart")
 pie_2021_fig = px.pie(pie_df_2021, values=1, names=0, title="2021 pie chart")
+pie_2022_fig = px.pie(pie_df_2022, values=1, names=0, title="2022 pie chart")
 app.layout = html.Div(
     children=[
         html.H1(children="Rhadamanthys"),
         html.Div(children="Iudicetur cor tuum"),
         dcc.Graph(id="2020_graph", figure=fig_2020),
         dcc.Graph(id="2021_graph", figure=fig_2021),
+        dcc.Graph(id="2022_graph", figure=fig_2022),
         dcc.Graph(id="full_usage_graph", figure=full_usage_fig),
         dcc.Graph(id="2020_piechart", figure=pie_2020_fig),
         dcc.Graph(id="2021_piechart", figure=pie_2021_fig),
+        dcc.Graph(id="2022_piechart", figure=pie_2022_fig),
         dcc.Graph(id="line_graph_sapp_full", figure=line_fig),
     ]
 )
