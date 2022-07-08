@@ -4,7 +4,7 @@ from dash import Dash, dcc, html
 
 app = Dash(__name__)
 
-labels = ["Data Import", "Assembly/Annotation", "Mapping/SNP_Calling", "RNA-Seq"]
+labels = ["Data Import", "Assembly", "Annotation", "Mapping", "SNP_Calling", "RNA-Seq"]
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
