@@ -1,3 +1,4 @@
+import logging
 import os
 from collections import defaultdict
 from csv import DictWriter
@@ -89,6 +90,7 @@ def convert_to_csv(data_dict: dict[str, dict[str, int]]):
 s = requests.Session()
 
 password = os.environ["PASSWORD"]
+logging.info("Getting cookies")
 s.post("https://rt.sanger.ac.uk", {"user": "gv4", "pass": password})
 
 header = {"Referer": "https://rt.sanger.ac.uk"}
@@ -96,15 +98,21 @@ s.headers.update(header)
 
 params = {"query": "Requestor.EmailAddress='sapp@sanger.ac.uk'"}
 url = "https://rt.sanger.ac.uk/REST/1.0/search/ticket"
+logging.info("Searching SAPP tickets")
 r = s.post(url, params=params).content.decode("utf-8").strip().split("\n")[2:]
 tickets = {int(x[0][:-1]) for x in map(lambda r: r.split(), r) if "trigger" in x}
 
 url = "https://rt.sanger.ac.uk/REST/1.0/ticket/{0}/show"
 myld = []
-for ticket in tickets:
+for i, ticket in enumerate(tickets):
+    if i and i % 10 == 0:
+        logging.info(f"Parsing tickets: {i}/{len(tickets)}")
+    elif i == len(tickets)-1:
+        logging.info(f"Parsing tickets: {len(tickets)}/{len(tickets)}")
     r = s.post(url.format(ticket)).content.decode("utf-8").strip().split("\n")[2:]
 
     myl = [x for x in map(lambda x: x.split(": "), r) if len(x) > 1]
     myld.append(dict(myl))
 
+logging.info("Counting data")
 convert_to_csv(count(*myld))
