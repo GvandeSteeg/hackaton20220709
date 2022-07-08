@@ -74,7 +74,8 @@ line_fig = px.line(
         "value": "Usage",
     },
 )
-full_usage_fig = px.bar(full_df, barmode="group", title="SAPP usage per Month 2020-22")
+full_usage_df = full_df["Requests"]
+full_usage_fig = px.bar(full_usage_df, barmode="group", title="SAPP usage per Month 2020-22")
 pie_2020_fig = px.pie(pie_df_2020, values=1, names=0, title="2020 pie chart")
 pie_2021_fig = px.pie(pie_df_2021, values=1, names=0, title="2021 pie chart")
 pie_2022_fig = px.pie(pie_df_2022, values=1, names=0, title="2022 pie chart")
